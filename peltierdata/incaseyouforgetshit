@@ -1,0 +1,4781 @@
+[pixel@riverhorse2 ~]$ 
+[pixel@riverhorse2 ~]$ 
+[pixel@riverhorse2 ~]$ 
+[pixel@riverhorse2 ~]$ ls
+88_irrad_2016_08_23            libusb-devel-0.1.4-3.el7.x86_64.rpm
+Arduino                        Music
+bnachman@lxplus.cern.ch        nikola
+canopy                         Pictures
+Canopy                         Public
+Desktop                        sketchbook
+Documents                      Templates
+Downloads                      usb-driver
+enthought                      Videos
+hdl-make                       webtalk_impact.xml
+_impact.cmd                    webtalk.log
+impact_impact.xwbt             YARR
+_impact.log                    yarr.bit
+impact.xsl                     yarr_clean
+libusb-0.1.4-3.el7.x86_64.rpm  yarr-eudet
+[pixel@riverhorse2 ~]$ cd yarr
+bash: cd: yarr: No such file or directory
+[pixel@riverhorse2 ~]$ cd yarr-eudet/
+[pixel@riverhorse2 yarr-eudet]$ git pull origin devel
+remote: Counting objects: 1003, done.
+remote: Compressing objects: 100% (28/28), done.
+remote: Total 1003 (delta 336), reused 324 (delta 324), pack-reused 651
+Receiving objects: 100% (1003/1003), 1.52 MiB | 0 bytes/s, done.
+Resolving deltas: 100% (750/750), completed with 105 local objects.
+From https://github.com/yarr/yarr
+ * branch            devel      -> FETCH_HEAD
+Updating aefff07..13ffd6d
+Fast-forward
+ README.rst                                      |      4 +
+ doc/_static/fe65p2_adapter_revB.jpg             |    Bin 0 -> 350403 bytes
+ doc/_static/yarr_quad_fei4_revB.jpg             |    Bin 0 -> 357174 bytes
+ doc/_static/yarr_quad_fei4_revB.png             |    Bin 101685 -> 0 bytes
+ doc/adapter.rst                                 |     35 +-
+ doc/emulator.rst                                |    155 +
+ doc/eudaq.rst                                   |     42 +
+ doc/fe65p2.rst                                  |     35 +
+ doc/fei4.rst                                    |    141 +-
+ doc/firmware.rst                                |     39 +-
+ doc/index.rst                                   |     10 +-
+ doc/install.rst                                 |    113 +-
+ eudet/eudaq/YARRConverterPlugin.cc              |     54 +-
+ eudet/yarr_fe65p2_producer.cpp                  |      2 +
+ gui/Makefile                                    |      2 +-
+ gui/YarrGui/YarrGui.pro                         |     24 +-
+ gui/YarrGui/createscandialog.h                  |      1 -
+ gui/YarrGui/editcfgdialog.cpp                   |    970 +-
+ gui/YarrGui/editcfgdialog.h                     |     60 +-
+ gui/YarrGui/editcfgdialog.ui                    |    445 +-
+ gui/YarrGui/fei4reghelper.cpp                   |     75 +-
+ gui/YarrGui/fei4reghelper.h                     |      4 +
+ gui/YarrGui/pointerdialog.cpp                   |     98 +
+ gui/YarrGui/pointerdialog.h                     |     40 +
+ gui/YarrGui/pointerdialog.ui                    |    111 +
+ gui/YarrGui/scanstruct.cpp                      |      3 +-
+ gui/YarrGui/scanstruct.h                        |      6 +-
+ gui/YarrGui/yarrgui.cpp                         |    943 +-
+ gui/YarrGui/yarrgui.h                           |     16 +-
+ gui/YarrGui/yarrgui.ui                          |     62 +-
+ gui/YarrGui/yarrgui_fes.cpp                     |    290 -
+ gui/YarrGui/yarrgui_plots.cpp                   |    197 -
+ gui/YarrGui/yarrgui_scans.cpp                   |    254 -
+ gui/YarrGui/yarrgui_spec.cpp                    |    100 -
+ gui/util/default.js                             | 164315 ++++++++++++++++++++-
+ hdl/syn/Makefile                                |    130 +-
+ hdl/syn/yarr_fe65p2_revC.bit                    |    Bin 1485344 -> 1485068 bytes
+ hdl/top_yarr_spec_fe65p2.vhd                    |     17 +-
+ hdl/trigger-logic/eudet_tlu.vhd                 |      2 +-
+ hdl/trigger-logic/wb_trigger_logic.vhd          |     25 +-
+ hdl/tx-core/trigger_unit.vhd                    |      2 +-
+ hdl/yarr_fe65p2_revC.ucf                        |      4 +-
+ src/.gitignore                                  |      1 +
+ src/Makefile                                    |    149 +-
+ src/configs/default_fe65p2.json                 |    422 +
+ src/configs/default_fei4b.json                  |   2798 +
+ src/configs/emuCfg.json                         |     17 +
+ src/configs/emu_fe0.json                        |      1 +
+ src/configs/specCfg.json                        |      8 +
+ src/kernel/base.c                               |      6 +-
+ src/kernel/compat.h                             |     40 +-
+ src/kernel/ioctl.c                              |      6 +-
+ src/kernel/umem.c                               |     18 +
+ src/libEmu/.gitignore                           |      4 +
+ src/libEmu/EmuCom.cpp                           |      4 +
+ src/libEmu/EmuController.cpp                    |      6 +
+ src/libEmu/EmuRxCore.cpp                        |     41 +
+ src/libEmu/EmuShm.cpp                           |    188 +
+ src/libEmu/EmuTxCore.cpp                        |     52 +
+ src/libEmu/Fei4Emu.cpp                          |    593 +
+ src/libEmu/include/.gitignore                   |      3 +
+ src/libEmu/include/EmuCom.h                     |     18 +
+ src/libEmu/include/EmuController.h              |     25 +
+ src/libEmu/include/EmuRxCore.h                  |     40 +
+ src/libEmu/include/EmuShm.h                     |     58 +
+ src/libEmu/include/EmuTxCore.h                  |     73 +
+ src/libEmu/include/Fei4Emu.h                    |    114 +
+ src/libFe65p2/Fe65p2.cpp                        |     17 +-
+ src/libFe65p2/Fe65p2Cfg.cpp                     |     23 +-
+ src/libFe65p2/include/Fe65p2.h                  |      2 +
+ src/libFei4/Fei4Analysis.cpp                    |    136 +-
+ src/libFei4/Fei4Cfg.cpp                         |     34 +-
+ src/libFei4/Fei4DataProcessor.cpp               |      6 +-
+ src/libFei4/Fei4Selftrigger.cpp                 |     45 +
+ src/libFei4/Fei4TriggerLoop.cpp                 |     16 +
+ src/libFei4/include/Fei4Analysis.h              |      8 +-
+ src/libFei4/include/Fei4Cfg.h                   |      1 -
+ src/libFei4/include/Fei4GlobalFeedback.h        |     18 +-
+ src/libFei4/include/Fei4PixelCfg.h              |     12 +-
+ src/libFei4/include/Fei4PixelFeedback.h         |     10 +-
+ src/libFei4/include/Fei4Scans.h                 |      1 +
+ src/libFei4/include/Fei4Selftrigger.h           |     31 +
+ src/libFei4/include/Fei4TriggerLoop.h           |      6 +-
+ src/libSpec/KernelMemory.cpp                    |      2 +-
+ src/libSpec/{SpecController.cpp => SpecCom.cpp} |     71 +-
+ src/libSpec/SpecRxCore.cpp                      |     65 +
+ src/libSpec/SpecTxCore.cpp                      |    120 +
+ src/libSpec/include/SpecCom.h                   |    109 +
+ src/libSpec/include/SpecController.h            |    106 +-
+ src/libSpec/include/SpecRxCore.h                |     51 +
+ src/libSpec/include/SpecTxCore.h                |     92 +
+ src/libUtil/AD7995.cpp                          |      4 +-
+ src/libUtil/BenchmarkTools.cpp                  |     10 +-
+ src/libUtil/Histo1d.cpp                         |      7 +-
+ src/libUtil/Histo2d.cpp                         |      7 +-
+ src/libUtil/PeriphialI2C.cpp                    |      2 +-
+ src/libUtil/include/AD7995.h                    |      4 +-
+ src/libUtil/include/BenchmarkTools.h            |     10 +-
+ src/libUtil/include/PeriphialI2C.h              |      6 +-
+ src/libUtil/include/json.hpp                    |      5 +
+ src/libYarr/Bookkeeper.cpp                      |     16 +-
+ src/libYarr/FrontEnd.cpp                        |     30 -
+ src/libYarr/LoopActionBase.cpp                  |      2 +-
+ src/libYarr/RxCore.cpp                          |     62 +-
+ src/libYarr/ScanFactory.cpp                     |      2 +-
+ src/libYarr/TxCore.cpp                          |    118 +-
+ src/libYarr/include/FeedbackBase.h              |      4 +-
+ src/libYarr/include/FrontEnd.h                  |     31 +-
+ src/libYarr/include/FrontEndGeometry.h          |      8 +
+ src/libYarr/include/HwController.h              |     21 +
+ src/libYarr/include/RxCore.h                    |     44 +-
+ src/libYarr/include/TxCore.h                    |    100 +-
+ src/scripts/Makefile                            |      2 +-
+ src/scripts/plotWithRoot.cxx                    |     54 +-
+ src/test.bin                                    |    Bin 43788 -> 0 bytes
+ src/tools/analog_fe65-p2.cpp                    |    370 -
+ src/tools/benchmarkDma.cpp                      |      4 +-
+ src/tools/benchmarkSingle.cpp                   |      4 +-
+ src/tools/config_fe65-p2.cpp                    |     10 +-
+ src/tools/digital_fe65-p2.cpp                   |    333 -
+ src/tools/epromRW.cpp                           |      6 +-
+ src/tools/epromWR.cpp                           |      6 +-
+ src/tools/errorCheckDma.cpp                     |      4 +-
+ src/tools/errorCheckSingle.cpp                  |      8 +-
+ src/tools/fixHitbus.cpp                         |     42 +-
+ src/tools/programFpga.cpp                       |      4 +-
+ src/tools/pulserDelay_test.cpp                  |     12 +-
+ src/tools/read_adc.cpp                          |      4 +-
+ src/tools/read_rawData.cpp                      |      3 +-
+ src/tools/scanConsole.cpp                       |    342 +-
+ src/tools/scanConsole65.cpp                     |     56 +-
+ src/tools/shmcat.cpp                            |     18 +
+ src/tools/test.cpp                              |      7 +-
+ src/tools/threshold_fe65-p2.cpp                 |    518 -
+ src/tune.sh                                     |     29 +-
+ 135 files changed, 170988 insertions(+), 5834 deletions(-)
+ create mode 100644 doc/_static/fe65p2_adapter_revB.jpg
+ create mode 100644 doc/_static/yarr_quad_fei4_revB.jpg
+ delete mode 100644 doc/_static/yarr_quad_fei4_revB.png
+ create mode 100644 doc/emulator.rst
+ create mode 100644 doc/eudaq.rst
+ create mode 100644 doc/fe65p2.rst
+ create mode 100644 gui/YarrGui/pointerdialog.cpp
+ create mode 100644 gui/YarrGui/pointerdialog.h
+ create mode 100644 gui/YarrGui/pointerdialog.ui
+ delete mode 100644 gui/YarrGui/yarrgui_fes.cpp
+ delete mode 100644 gui/YarrGui/yarrgui_plots.cpp
+ delete mode 100644 gui/YarrGui/yarrgui_scans.cpp
+ delete mode 100644 gui/YarrGui/yarrgui_spec.cpp
+ create mode 100644 src/configs/default_fe65p2.json
+ create mode 100644 src/configs/default_fei4b.json
+ create mode 100644 src/configs/emuCfg.json
+ create mode 100644 src/configs/emu_fe0.json
+ create mode 100644 src/configs/specCfg.json
+ create mode 100644 src/libEmu/.gitignore
+ create mode 100644 src/libEmu/EmuCom.cpp
+ create mode 100644 src/libEmu/EmuController.cpp
+ create mode 100644 src/libEmu/EmuRxCore.cpp
+ create mode 100644 src/libEmu/EmuShm.cpp
+ create mode 100644 src/libEmu/EmuTxCore.cpp
+ create mode 100644 src/libEmu/Fei4Emu.cpp
+ create mode 100644 src/libEmu/include/.gitignore
+ create mode 100644 src/libEmu/include/EmuCom.h
+ create mode 100644 src/libEmu/include/EmuController.h
+ create mode 100644 src/libEmu/include/EmuRxCore.h
+ create mode 100644 src/libEmu/include/EmuShm.h
+ create mode 100644 src/libEmu/include/EmuTxCore.h
+ create mode 100644 src/libEmu/include/Fei4Emu.h
+ create mode 100644 src/libFei4/Fei4Selftrigger.cpp
+ create mode 100644 src/libFei4/include/Fei4Selftrigger.h
+ rename src/libSpec/{SpecController.cpp => SpecCom.cpp} (92%)
+ create mode 100644 src/libSpec/SpecRxCore.cpp
+ create mode 100644 src/libSpec/SpecTxCore.cpp
+ create mode 100644 src/libSpec/include/SpecCom.h
+ create mode 100644 src/libSpec/include/SpecRxCore.h
+ create mode 100644 src/libSpec/include/SpecTxCore.h
+ create mode 100644 src/libYarr/include/FrontEndGeometry.h
+ create mode 100644 src/libYarr/include/HwController.h
+ delete mode 100644 src/test.bin
+ delete mode 100644 src/tools/analog_fe65-p2.cpp
+ delete mode 100644 src/tools/digital_fe65-p2.cpp
+ create mode 100644 src/tools/shmcat.cpp
+ delete mode 100644 src/tools/threshold_fe65-p2.cpp
+[pixel@riverhorse2 yarr-eudet]$ 
+[pixel@riverhorse2 yarr-eudet]$ 
+[pixel@riverhorse2 yarr-eudet]$ cd src/
+[pixel@riverhorse2 src]$ make clean
+[Clean] … done!
+[pixel@riverhorse2 src]$ make -j4
+[Compiling] build/fixHitbus.o
+[Compiling] build/SpecRxCore.o
+[Compiling] build/SpecDevice.o
+[Compiling] build/KernelMemory.o
+[Compiling] build/Exception.o
+[Compiling] build/SpecCom.o
+[Compiling] build/UserMemory.o
+[Compiling] build/SpecTxCore.o
+[Compiling] build/ResultBase.o
+[Compiling] build/AllStdActions.o
+[Compiling] build/TxCore.o
+[Compiling] build/RxCore.o
+[Compiling] build/LoopActionBase.o
+[Compiling] build/StdDataGatherer.o
+[Compiling] build/LoopEngine.o
+[Compiling] build/Clipboard.o
+[Compiling] build/StdDataLoop.o
+[Compiling] build/HistogramBase.o
+[Compiling] build/RawData.o
+[Compiling] build/ScanBase.o
+[Compiling] build/Bookkeeper.o
+[Compiling] build/DataProcessor.o
+[Compiling] build/ScanFactory.o
+[Compiling] build/FrontEnd.o
+[Compiling] build/Fei4DigitalScan.o
+[Compiling] build/Fei4TriggerLoop.o
+[Compiling] build/Fei4Cmd.o
+[Compiling] build/Fei4TotScan.o
+[Compiling] build/Fei4GlobalPreampTune.o
+[Compiling] build/Fei4Cfg.o
+[Compiling] build/Fei4PixelCfg.o
+[Compiling] build/Fei4DcLoop.o
+[Compiling] build/Fei4Analysis.o
+[Compiling] build/Fei4PixelThresholdTune.o
+[Compiling] build/Fei4MaskLoop.o
+[Compiling] build/Fei4DataProcessor.o
+[Compiling] build/Fei4GlobalPreampRetune.o
+[Compiling] build/Fei4ParameterLoop.o
+[Compiling] build/Fei4NoiseScan.o
+[Compiling] build/Fei4Histogrammer.o
+[Compiling] build/Fei4Selftrigger.o
+[Compiling] build/Fei4GlobalCfg.o
+[Compiling] build/Fei4PixelPreampTune.o
+[Compiling] build/Fei4AnalogScan.o
+[Compiling] build/AllFei4Actions.o
+[Compiling] build/Fei4EventData.o
+[Compiling] build/Fei4GlobalThresholdTune.o
+[Compiling] build/Fei4ThresholdScan.o
+[Compiling] build/Fei4.o
+[Compiling] build/Fe65p2DataProcessor.o
+[Compiling] build/Fe65p2MaskLoop.o
+[Compiling] build/Fe65p2TotScan.o
+[Compiling] build/Fe65p2GlobalFeedback.o
+[Compiling] build/Fe65p2GlobalThresholdTune.o
+[Compiling] build/Fe65p2.o
+[Compiling] build/Fe65p2ThresholdScan.o
+[Compiling] build/Fe65p2Cmd.o
+[Compiling] build/Fe65p2QcLoop.o
+[Compiling] build/Fe65p2AnalogScan.o
+[Compiling] build/Fe65p2TriggerLoop.o
+[Compiling] build/Fe65p2PixelCfg.o
+[Compiling] build/Fe65p2Cfg.o
+[Compiling] build/Fe65p2ExtTrigger.o
+[Compiling] build/Fe65p2PixelFeedback.o
+[Compiling] build/Fe65p2DigitalScan.o
+[Compiling] build/Fe65p2PixelThresholdTune.o
+[Compiling] build/Fe65p2NoiseScan.o
+[Compiling] build/Fe65p2ParameterLoop.o
+[Compiling] build/Fe65p2GlobalCfg.o
+[Compiling] build/AD7995.o
+[Compiling] build/Utils.o
+[Compiling] build/SerialCom.o
+[Compiling] build/BenchmarkTools.o
+[Compiling] build/BitFile.o
+[Compiling] build/PeriphialI2C.o
+[Compiling] build/lmmin.o
+[Compiling] build/Histo.o
+[Compiling] build/Histo1d.o
+[Compiling] build/tinyxml2.o
+[Compiling] build/BitOps.o
+[Compiling] build/lmcurve.o
+[Compiling] build/Histo2d.o
+[Compiling] build/EmuCom.o
+[Compiling] build/EmuRxCore.o
+[Compiling] build/EmuTxCore.o
+[Compiling] build/EmuController.o
+[Compiling] build/EmuShm.o
+[Compiling] build/Fei4Emu.o
+[Compiling] build/scanConsole.o
+[Compiling] build/pulserDelay_test.o
+[Compiling] build/errorCheckSingle.o
+[Compiling] build/shmcat.o
+[Compiling] build/benchmarkDma.o
+[Compiling] build/programFpga.o
+[Compiling] build/read_adc.o
+[Compiling] build/epromWR.o
+[Compiling] build/applyMask.o
+[Compiling] build/plot_tdac.o
+[Compiling] build/config_fe65-p2.o
+[Compiling] build/read_rawData.o
+[Compiling] build/benchmarkSingle.o
+[Compiling] build/scanConsole65.o
+[Compiling] build/errorCheckDma.o
+[Compiling] build/epromRW.o
+[Compiling] build/test.o
+[Creating] lib/libyarr.a
+[Linking] bin/fixHitbus
+[Linking] bin/scanConsole
+[Linking] bin/pulserDelay_test
+[Linking] bin/errorCheckSingle
+[Linking] bin/shmcat
+[Linking] bin/benchmarkDma
+[Linking] bin/programFpga
+[Linking] bin/read_adc
+[Linking] bin/epromWR
+[Linking] bin/applyMask
+[Linking] bin/plot_tdac
+[Linking] bin/config_fe65-p2
+[Linking] bin/read_rawData
+[Linking] bin/benchmarkSingle
+[Linking] bin/errorCheckDma
+[Linking] bin/epromRW
+[Linking] bin/test
+[Linking] bin/scanConsole65
+[pixel@riverhorse2 src]$ bin/programFpga ../hdl/
+common/                       top_yarr_spec2.vhd
+ddr3-core/                    top_yarr_spec_fe65p2.vhd
+delay_line.vhd                top_yarr_spec.vhd
+fe65p2_addon.vhd              trigger-logic/
+gn4124-core/                  tx-core/
+i2c-master/                   yarr_fe65p2_revB.ucf
+ip_cores/                     yarr_fe65p2_revC.ucf
+Manifest.py                   yarr_spec_quad_fei4_revA.ucf
+rx-core/                      yarr_spec_quad_fei4_revB.ucf
+syn/                          yarr_spec.ucf
+[pixel@riverhorse2 src]$ bin/programFpga ../hdl/syn/
+def_yarr.bit             xst/                     yarr_quad_fei4_revA.bit
+.gitignore               yarr.bld                 yarr_quad_fei4_revB.bit
+Makefile                 yarr.cmd_log             yarr_spec.gise
+Manifest.py              yarr_fe65p2_revB.bit     yarr_spec.xise
+_ngo/                    yarr_fe65p2_revC.bit     yarr.syr
+run.tcl                  yarr.lso                 yarr.xst
+webtalk_pn.xml           yarr.ngc                 yarr_xst.xrpt
+xlnx_auto_0_xdb/         yarr.ngr                 
+_xmsgs/                  yarr.prj                 
+[pixel@riverhorse2 src]$ bin/programFpga ../hdl/syn/yarr_quad_fei4_revB.bit
+Opening file: ../hdl/syn/yarr_quad_fei4_revB.bit
+Size: 1.41732 MB
+=========================================
+File info:
+ Design Name: yarr.ncd;HW_TIMEOUT=FALSE;UserID=0xFFFFFFFF
+ Device:      6slx45tfgg484
+ Timestamp:   2015/08/25 12:20:08
+ Data size:   1486064
+=========================================
+Reading file.
+Opening Spec device.
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7fe06f77c000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7fe070896000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+void SpecCom::configure() -> MSI needs to be configured!
+Starting programming ...
+int SpecCom::progFpga(const void*, size_t) -> Setting up programming of FPGA
+int SpecCom::progFpga(const void*, size_t) -> Starting programming!
+int SpecCom::progFpga(const void*, size_t) -> Programming done!!
+int SpecCom::progFpga(const void*, size_t) -> FCL IRQ: 0x38
+int SpecCom::progFpga(const void*, size_t) -> FCL IRQ indicates CONFIG_DONE
+int SpecCom::progFpga(const void*, size_t) -> FCL Status: 0x2c
+int SpecCom::progFpga(const void*, size_t) -> FCL STATUS indicates SPRI_DONE
+... done!
+[pixel@riverhorse2 src]$ bin/test 
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f7f2b510000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f7f2b62d000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+Starting DMA write/read test ...
+... writing 8192 byte.
+int SpecCom::readDma(uint32_t, uint32_t*, size_t) -> Interrupt timeout, aborting transfer!
+... read 8192 byte.
+Success! No errors.
+[pixel@riverhorse2 src]$ bin/test 
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f4f16cbf000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f4f16ddc000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+void SpecCom::configure() -> MSI needs to be configured!
+Starting DMA write/read test ...
+... writing 8192 byte.
+... read 8192 byte.
+Success! No errors.
+[pixel@riverhorse2 src]$ sudo vim /etc/host
+host.conf    hostname     hosts        hosts.allow  hosts.deny   
+[pixel@riverhorse2 src]$ sudo vim /etc/hostname 
+[sudo] password for pixel: 
+[pixel@riverhorse2 src]$ hostname
+riverhorse2.dhcp.lbl.gov
+[pixel@riverhorse2 src]$ bin/scanConsole -r configs/
+default_fe65p2.json  emuCfg.json          specCfg.json
+[pixel@riverhorse2 src]$ bin/scanConsole -r configs/specCfg.json -c configs/alfred.json -s digitalscan -p
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: digitalscan
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000383_digitalscan/
+
+Timestamp: 2017-06-09_16:46:02
+Run Number: 383
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f9dadf05000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f9dae022000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+File not found: configs/alfred.json
+Creating new config (type FE-I4B) ...
+Rx 0 seems to be free, assuming same Tx channel.
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring JohnDoe
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: digitalscan
+-> Found Digital Scan
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+ ---> Mask Stage 16
+ ---> Mask Stage 17
+ ---> Mask Stage 18
+ ---> Mask Stage 19
+ ---> Mask Stage 20
+ ---> Mask Stage 21
+ ---> Mask Stage 22
+ ---> Mask Stage 23
+ ---> Mask Stage 24
+ ---> Mask Stage 25
+ ---> Mask Stage 26
+ ---> Mask Stage 27
+ ---> Mask Stage 28
+ ---> Mask Stage 29
+ ---> Mask Stage 30
+ ---> Mask Stage 31
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          762 ms
+-> Processing:    38 ms
+-> Analysis:      65 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE JohnDoe to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : EnMask
+Warning: empty cb range [0:0], adjusting to [-1:1]
+Plotting : OccupancyMap
+Warning: empty cb range [0:0], adjusting to [-1:1]
+Plotting : L1Dist
+Warning: empty y range [0:0], adjusting to [0:1]
+Saving : EnMask
+Saving : OccupancyMap
+Saving : L1Dist
+./data/000383_digitalscan/JohnDoe_EnMask.png
+./data/000383_digitalscan/JohnDoe_L1Dist.pdf
+./data/000383_digitalscan/JohnDoe_OccupancyMap.png
+[pixel@riverhorse2 src]$ bin/scanConsole -r configs/specCfg.json -c configs/alfred.json -s digitalscan -p
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: digitalscan
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000384_digitalscan/
+
+Timestamp: 2017-06-09_16:46:36
+Run Number: 384
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f24cabda000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f24cacf7000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "JohnDoe"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring JohnDoe
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: digitalscan
+-> Found Digital Scan
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+ ---> Mask Stage 16
+ ---> Mask Stage 17
+ ---> Mask Stage 18
+ ---> Mask Stage 19
+ ---> Mask Stage 20
+ ---> Mask Stage 21
+ ---> Mask Stage 22
+ ---> Mask Stage 23
+ ---> Mask Stage 24
+ ---> Mask Stage 25
+ ---> Mask Stage 26
+ ---> Mask Stage 27
+ ---> Mask Stage 28
+ ---> Mask Stage 29
+ ---> Mask Stage 30
+ ---> Mask Stage 31
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          808 ms
+-> Processing:    21 ms
+-> Analysis:      24 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE JohnDoe to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : EnMask
+Warning: empty cb range [1:1], adjusting to [0.99:1.01]
+Plotting : OccupancyMap
+Warning: empty cb range [100:100], adjusting to [99:101]
+Plotting : L1Dist
+Saving : EnMask
+Saving : OccupancyMap
+Saving : L1Dist
+./data/000384_digitalscan/JohnDoe_EnMask.png
+./data/000384_digitalscan/JohnDoe_L1Dist.pdf
+./data/000384_digitalscan/JohnDoe_OccupancyMap.png
+[pixel@riverhorse2 src]$ display ./data/000384_digitalscan/JohnDoe_OccupancyMap.png
+[pixel@riverhorse2 src]$ bin/scanConsole -r configs/specCfg.json -c configs/alfred.json -s analogscan -p
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: analogscan
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000385_analogscan/
+
+Timestamp: 2017-06-09_16:47:41
+Run Number: 385
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f9822e70000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f9822f8d000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "JohnDoe"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring JohnDoe
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: analogscan
+-> Found Analog Scan
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+ ---> Mask Stage 16
+ ---> Mask Stage 17
+ ---> Mask Stage 18
+ ---> Mask Stage 19
+ ---> Mask Stage 20
+ ---> Mask Stage 21
+ ---> Mask Stage 22
+ ---> Mask Stage 23
+ ---> Mask Stage 24
+ ---> Mask Stage 25
+ ---> Mask Stage 26
+ ---> Mask Stage 27
+ ---> Mask Stage 28
+ ---> Mask Stage 29
+ ---> Mask Stage 30
+ ---> Mask Stage 31
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          809 ms
+-> Processing:    20 ms
+-> Analysis:      138 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE JohnDoe to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : EnMask
+Plotting : OccupancyMap
+Plotting : L1Dist
+Saving : EnMask
+Saving : OccupancyMap
+Saving : L1Dist
+./data/000385_analogscan/JohnDoe_EnMask.png
+./data/000385_analogscan/JohnDoe_L1Dist.pdf
+./data/000385_analogscan/JohnDoe_OccupancyMap.png
+[pixel@riverhorse2 src]$ display ./data/000385_analogscan/JohnDoe_OccupancyMap.png
+[pixel@riverhorse2 src]$ display ./data/000385_analogscan/JohnDoe_EnMask.png
+[pixel@riverhorse2 src]$ bin/scanConsole -r configs/specCfg.json -c configs/alfred.json -s totscan -p
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: totscan
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000386_totscan/
+
+Timestamp: 2017-06-09_16:49:51
+Run Number: 386
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f8836f0f000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f883702c000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "JohnDoe"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring JohnDoe
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: totscan
+-> Found ToT Scan
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+[0] ToT Mean = 9.48044 +- 1.43024
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          734 ms
+-> Processing:    102 ms
+-> Analysis:      12 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE JohnDoe to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_0
+Plotting : SigmaTotDist
+Plotting : L1Dist
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_0
+Saving : SigmaTotDist
+Saving : L1Dist
+./data/000386_totscan/JohnDoe_L1Dist.pdf
+./data/000386_totscan/JohnDoe_MeanTotDist_0.pdf
+./data/000386_totscan/JohnDoe_MeanTotMap.png
+./data/000386_totscan/JohnDoe_SigmaTotDist.pdf
+./data/000386_totscan/JohnDoe_SigmaTotMap.png
+[pixel@riverhorse2 src]$ display ./data/000386_totscan/JohnDoe_MeanTotMap.png
+[pixel@riverhorse2 src]$ bin/scanConsole -r configs/specCfg.json -c configs/alfred.json -s thresholdscan -p -t 3000
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: thresholdscan
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 3000
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000387_thresholdscan/
+
+Timestamp: 2017-06-09_16:52:44
+Run Number: 387
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f3589930000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f3589a4d000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "JohnDoe"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring JohnDoe
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: thresholdscan
+-> Found Threshold Scan
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+[0] Threashold Mean = 2994.58 +- 337.688
+[0] Noise Mean = 112.417 +- 10.2961
+Saving S-curve #0
+Saving S-curve #2688
+Saving S-curve #5376
+Saving S-curve #8064
+Saving S-curve #10752
+Saving S-curve #13440
+Saving S-curve #16128
+Saving S-curve #18816
+Saving S-curve #21504
+Saving S-curve #24192
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          65567 ms
+-> Processing:    14 ms
+-> Analysis:      96 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE JohnDoe to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : L1Dist
+Plotting : ThresholdDist
+Plotting : ThresholdMap
+Plotting : NoiseDist
+Plotting : NoiseMap
+Plotting : Chi2Dist
+Plotting : TimePerFitDist
+Plotting : Scurve-0
+Plotting : Scurve-2688
+Plotting : Scurve-5376
+Plotting : Scurve-8064
+Plotting : Scurve-10752
+Plotting : Scurve-13440
+Plotting : Scurve-16128
+Plotting : Scurve-18816
+Plotting : Scurve-21504
+Plotting : Scurve-24192
+Saving : L1Dist
+Saving : ThresholdDist
+Saving : ThresholdMap
+Saving : NoiseDist
+Saving : NoiseMap
+Saving : Chi2Dist
+Saving : TimePerFitDist
+Saving : Scurve-0
+Saving : Scurve-2688
+Saving : Scurve-5376
+Saving : Scurve-8064
+Saving : Scurve-10752
+Saving : Scurve-13440
+Saving : Scurve-16128
+Saving : Scurve-18816
+Saving : Scurve-21504
+Saving : Scurve-24192
+./data/000387_thresholdscan/JohnDoe_Chi2Dist.pdf
+./data/000387_thresholdscan/JohnDoe_L1Dist.pdf
+./data/000387_thresholdscan/JohnDoe_NoiseDist.pdf
+./data/000387_thresholdscan/JohnDoe_NoiseMap.png
+./data/000387_thresholdscan/JohnDoe_Scurve-0.pdf
+./data/000387_thresholdscan/JohnDoe_Scurve-10752.pdf
+./data/000387_thresholdscan/JohnDoe_Scurve-13440.pdf
+./data/000387_thresholdscan/JohnDoe_Scurve-16128.pdf
+./data/000387_thresholdscan/JohnDoe_Scurve-18816.pdf
+./data/000387_thresholdscan/JohnDoe_Scurve-21504.pdf
+./data/000387_thresholdscan/JohnDoe_Scurve-24192.pdf
+./data/000387_thresholdscan/JohnDoe_Scurve-2688.pdf
+./data/000387_thresholdscan/JohnDoe_Scurve-5376.pdf
+./data/000387_thresholdscan/JohnDoe_Scurve-8064.pdf
+./data/000387_thresholdscan/JohnDoe_ThresholdDist.pdf
+./data/000387_thresholdscan/JohnDoe_ThresholdMap.png
+./data/000387_thresholdscan/JohnDoe_TimePerFitDist.pdf
+[pixel@riverhorse2 src]$ display ./data/000387_thresholdscan/JohnDoe_ThresholdDist.pdf
+[pixel@riverhorse2 src]$ evince ./data/000387_thresholdscan/JohnDoe_ThresholdDist.pdf
+^C
+[pixel@riverhorse2 src]$ display ./data/000387_thresholdscan/JohnDoe_ThresholdMap.png
+[pixel@riverhorse2 src]$ evince ./data/000387_thresholdscan/JohnDoe_ThresholdDist.pdf
+^C
+[pixel@riverhorse2 src]$ bin/scanConsole -r configs/specCfg.json -c configs/alfred.json -s tune_globlathreshold -p -t 2000
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: tune_globlathreshold
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2000
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000388_tune_globlathreshold/
+
+Timestamp: 2017-06-09_16:57:07
+Run Number: 388
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f0db687d000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f0db699a000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "JohnDoe"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring JohnDoe
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: tune_globlathreshold
+-> No matching Scan found, possible:
+  digitalscan
+  analogscan
+  thresholdscan
+  totscan
+  tune_globalthreshold
+  tune_pixelthreshold
+  tune_globalpreamp
+  tune_pixelpreamp
+  noisescan
+  selftrigger
+  selftrigger_noise
+-> Aborting!
+[pixel@riverhorse2 src]$ bin/scanConsole -r configs/specCfg.json -c configs/alfred.json -s tune_globalthreshold -p -t 2000
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: tune_globalthreshold
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2000
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000389_tune_globalthreshold/
+
+Timestamp: 2017-06-09_16:57:13
+Run Number: 389
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f9767f26000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f9768043000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "JohnDoe"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring JohnDoe
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: tune_globalthreshold
+-> Found Global Threshold Tuning
+-> Running pre scan!
+void LoopActionBase::setVerbose(bool) : Enabling debug output
+void LoopActionBase::setup(LoopStatus*, Bookkeeper*)
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0050372
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 239
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0050372
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 223
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0050372
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 207
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0050372
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 191
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0050372
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 175
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.00504241
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 159
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.00521838
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 143
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.00844996
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 127
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0526797
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 111
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.324793
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 95
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.811596
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 103
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.581528
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 107
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.445522
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 105
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.510197
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 106
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.477045
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 106
+ --> Final parameter of Fe 0 is 106
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          22258 ms
+-> Processing:    49 ms
+-> Analysis:      50 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE JohnDoe to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : OccupancyMap-0
+Plotting : OccupancyDist-0
+Plotting : L1Dist-0
+Plotting : OccupancyMap-1
+Plotting : OccupancyDist-1
+Plotting : L1Dist-1
+Plotting : OccupancyMap-2
+Plotting : OccupancyDist-2
+Plotting : L1Dist-2
+Plotting : OccupancyMap-3
+Plotting : OccupancyDist-3
+Plotting : L1Dist-3
+Plotting : OccupancyMap-4
+Plotting : OccupancyDist-4
+Plotting : L1Dist-4
+Plotting : OccupancyMap-5
+Plotting : OccupancyDist-5
+Plotting : L1Dist-5
+Plotting : OccupancyMap-6
+Plotting : OccupancyDist-6
+Plotting : L1Dist-6
+Plotting : OccupancyMap-7
+Plotting : OccupancyDist-7
+Plotting : L1Dist-7
+Plotting : OccupancyMap-8
+Plotting : OccupancyDist-8
+Plotting : L1Dist-8
+Plotting : OccupancyMap-9
+Plotting : OccupancyDist-9
+Plotting : L1Dist-9
+Plotting : OccupancyMap-10
+Plotting : OccupancyDist-10
+Plotting : L1Dist-10
+Plotting : OccupancyMap-11
+Plotting : OccupancyDist-11
+Plotting : L1Dist-11
+Plotting : OccupancyMap-12
+Plotting : OccupancyDist-12
+Plotting : L1Dist-12
+Plotting : OccupancyMap-13
+Plotting : OccupancyDist-13
+Plotting : L1Dist-13
+Plotting : OccupancyMap-14
+Plotting : OccupancyDist-14
+Plotting : L1Dist-14
+Saving : OccupancyMap-0
+Saving : OccupancyDist-0
+Saving : L1Dist-0
+Saving : OccupancyMap-1
+Saving : OccupancyDist-1
+Saving : L1Dist-1
+Saving : OccupancyMap-2
+Saving : OccupancyDist-2
+Saving : L1Dist-2
+Saving : OccupancyMap-3
+Saving : OccupancyDist-3
+Saving : L1Dist-3
+Saving : OccupancyMap-4
+Saving : OccupancyDist-4
+Saving : L1Dist-4
+Saving : OccupancyMap-5
+Saving : OccupancyDist-5
+Saving : L1Dist-5
+Saving : OccupancyMap-6
+Saving : OccupancyDist-6
+Saving : L1Dist-6
+Saving : OccupancyMap-7
+Saving : OccupancyDist-7
+Saving : L1Dist-7
+Saving : OccupancyMap-8
+Saving : OccupancyDist-8
+Saving : L1Dist-8
+Saving : OccupancyMap-9
+Saving : OccupancyDist-9
+Saving : L1Dist-9
+Saving : OccupancyMap-10
+Saving : OccupancyDist-10
+Saving : L1Dist-10
+Saving : OccupancyMap-11
+Saving : OccupancyDist-11
+Saving : L1Dist-11
+Saving : OccupancyMap-12
+Saving : OccupancyDist-12
+Saving : L1Dist-12
+Saving : OccupancyMap-13
+Saving : OccupancyDist-13
+Saving : L1Dist-13
+Saving : OccupancyMap-14
+Saving : OccupancyDist-14
+Saving : L1Dist-14
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-0.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-10.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-11.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-12.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-13.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-14.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-1.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-2.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-3.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-4.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-5.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-6.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-7.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-8.pdf
+./data/000389_tune_globalthreshold/JohnDoe_L1Dist-9.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-0.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-10.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-11.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-12.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-13.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-14.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-1.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-2.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-3.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-4.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-5.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-6.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-7.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-8.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyDist-9.pdf
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-0.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-10.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-11.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-12.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-13.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-14.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-1.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-2.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-3.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-4.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-5.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-6.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-7.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-8.png
+./data/000389_tune_globalthreshold/JohnDoe_OccupancyMap-9.png
+[pixel@riverhorse2 src]$ bin/scanConsole -r configs/specCfg.json -c configs/alfred.json -s tune_pixelthreshold -p -t 2000
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: tune_pixelthreshold
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2000
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000390_tune_pixelthreshold/
+
+Timestamp: 2017-06-09_16:57:51
+Run Number: 390
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7fc142372000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7fc14248f000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "JohnDoe"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring JohnDoe
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: tune_pixelthreshold
+-> Found Pixel Threshold Tuning
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.478702
+[0] RMS: 82.2699
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.514054
+[0] RMS: 92.6563
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.506986
+[0] RMS: 78.1043
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.501257
+[0] RMS: 51.0434
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.493525
+[0] RMS: 23.9711
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          7586 ms
+-> Processing:    43 ms
+-> Analysis:      35 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE JohnDoe to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : OccupancyMap-0
+Plotting : OccupancyDist-0
+Plotting : L1Dist-0
+Plotting : OccupancyMap-1
+Plotting : OccupancyDist-1
+Plotting : L1Dist-1
+Plotting : OccupancyMap-2
+Plotting : OccupancyDist-2
+Plotting : L1Dist-2
+Plotting : OccupancyMap-3
+Plotting : OccupancyDist-3
+Plotting : L1Dist-3
+Plotting : OccupancyMap-4
+Plotting : OccupancyDist-4
+Plotting : L1Dist-4
+Saving : OccupancyMap-0
+Saving : OccupancyDist-0
+Saving : L1Dist-0
+Saving : OccupancyMap-1
+Saving : OccupancyDist-1
+Saving : L1Dist-1
+Saving : OccupancyMap-2
+Saving : OccupancyDist-2
+Saving : L1Dist-2
+Saving : OccupancyMap-3
+Saving : OccupancyDist-3
+Saving : L1Dist-3
+Saving : OccupancyMap-4
+Saving : OccupancyDist-4
+Saving : L1Dist-4
+./data/000390_tune_pixelthreshold/JohnDoe_L1Dist-0.pdf
+./data/000390_tune_pixelthreshold/JohnDoe_L1Dist-1.pdf
+./data/000390_tune_pixelthreshold/JohnDoe_L1Dist-2.pdf
+./data/000390_tune_pixelthreshold/JohnDoe_L1Dist-3.pdf
+./data/000390_tune_pixelthreshold/JohnDoe_L1Dist-4.pdf
+./data/000390_tune_pixelthreshold/JohnDoe_OccupancyDist-0.pdf
+./data/000390_tune_pixelthreshold/JohnDoe_OccupancyDist-1.pdf
+./data/000390_tune_pixelthreshold/JohnDoe_OccupancyDist-2.pdf
+./data/000390_tune_pixelthreshold/JohnDoe_OccupancyDist-3.pdf
+./data/000390_tune_pixelthreshold/JohnDoe_OccupancyDist-4.pdf
+./data/000390_tune_pixelthreshold/JohnDoe_OccupancyMap-0.png
+./data/000390_tune_pixelthreshold/JohnDoe_OccupancyMap-1.png
+./data/000390_tune_pixelthreshold/JohnDoe_OccupancyMap-2.png
+./data/000390_tune_pixelthreshold/JohnDoe_OccupancyMap-3.png
+./data/000390_tune_pixelthreshold/JohnDoe_OccupancyMap-4.png
+[pixel@riverhorse2 src]$ bin/scanConsole -r configs/specCfg.json -c configs/alfred.json -s thresholdscan -p -t 2000#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: thresholdscan
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2000
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000391_thresholdscan/
+
+Timestamp: 2017-06-09_16:58:21
+Run Number: 391
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f99854c5000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f99855e2000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "JohnDoe"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring JohnDoe
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: thresholdscan
+-> Found Threshold Scan
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+[0] Threashold Mean = 1984.09 +- 36.0679
+[0] Noise Mean = 120.984 +- 10.3848
+Saving S-curve #0
+Saving S-curve #2688
+Saving S-curve #5376
+Saving S-curve #8064
+Saving S-curve #10752
+Saving S-curve #13440
+Saving S-curve #16128
+Saving S-curve #18816
+Saving S-curve #21504
+Saving S-curve #24192
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          66046 ms
+-> Processing:    32 ms
+-> Analysis:      98 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE JohnDoe to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : L1Dist
+Plotting : ThresholdDist
+Plotting : ThresholdMap
+Plotting : NoiseDist
+Plotting : NoiseMap
+Plotting : Chi2Dist
+Plotting : TimePerFitDist
+Plotting : Scurve-0
+Plotting : Scurve-2688
+Plotting : Scurve-5376
+Plotting : Scurve-8064
+Plotting : Scurve-10752
+Plotting : Scurve-13440
+Plotting : Scurve-16128
+Plotting : Scurve-18816
+Plotting : Scurve-21504
+Plotting : Scurve-24192
+Saving : L1Dist
+Saving : ThresholdDist
+Saving : ThresholdMap
+Saving : NoiseDist
+Saving : NoiseMap
+Saving : Chi2Dist
+Saving : TimePerFitDist
+Saving : Scurve-0
+Saving : Scurve-2688
+Saving : Scurve-5376
+Saving : Scurve-8064
+Saving : Scurve-10752
+Saving : Scurve-13440
+Saving : Scurve-16128
+Saving : Scurve-18816
+Saving : Scurve-21504
+Saving : Scurve-24192
+./data/000391_thresholdscan/JohnDoe_Chi2Dist.pdf
+./data/000391_thresholdscan/JohnDoe_L1Dist.pdf
+./data/000391_thresholdscan/JohnDoe_NoiseDist.pdf
+./data/000391_thresholdscan/JohnDoe_NoiseMap.png
+./data/000391_thresholdscan/JohnDoe_Scurve-0.pdf
+./data/000391_thresholdscan/JohnDoe_Scurve-10752.pdf
+./data/000391_thresholdscan/JohnDoe_Scurve-13440.pdf
+./data/000391_thresholdscan/JohnDoe_Scurve-16128.pdf
+./data/000391_thresholdscan/JohnDoe_Scurve-18816.pdf
+./data/000391_thresholdscan/JohnDoe_Scurve-21504.pdf
+./data/000391_thresholdscan/JohnDoe_Scurve-24192.pdf
+./data/000391_thresholdscan/JohnDoe_Scurve-2688.pdf
+./data/000391_thresholdscan/JohnDoe_Scurve-5376.pdf
+./data/000391_thresholdscan/JohnDoe_Scurve-8064.pdf
+./data/000391_thresholdscan/JohnDoe_ThresholdDist.pdf
+./data/000391_thresholdscan/JohnDoe_ThresholdMap.png
+./data/000391_thresholdscan/JohnDoe_TimePerFitDist.pdf
+[pixel@riverhorse2 src]$ bin/scanConsole -r configs/specCfg.json -c configs/alfred.json -s thresholdscan -p -t 2000^C
+[pixel@riverhorse2 src]$ display ./data/000391_thresholdscan/JohnDoe_ThresholdDist.pdf
+^C
+[pixel@riverhorse2 src]$ display ./data/000391_thresholdscan/JohnDoe_ThresholdMap.png 
+[pixel@riverhorse2 src]$ vim tune.sh 
+[pixel@riverhorse2 src]$ ./tune.sh 
+Usage: ./tune.sh <target_threshold> <target_tot> <target_charge> <controller_config.json> <config_file1.json> [<config_file2.json> ..]
+[pixel@riverhorse2 src]$ ./tune.sh 2500 10 16000 configs/specCfg.json ^C
+[pixel@riverhorse2 src]$ vim configs/alfred.json 
+[pixel@riverhorse2 src]$ ./tune.sh 2500 10 16000 configs/specCfg.json configs/alfred.json 
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: digitalscan
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000392_digitalscan/
+
+Timestamp: 2017-06-09_17:04:49
+Run Number: 392
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7fa231937000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7fa231a54000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "Alfred"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring Alfred
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: digitalscan
+-> Found Digital Scan
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+ ---> Mask Stage 16
+ ---> Mask Stage 17
+ ---> Mask Stage 18
+ ---> Mask Stage 19
+ ---> Mask Stage 20
+ ---> Mask Stage 21
+ ---> Mask Stage 22
+ ---> Mask Stage 23
+ ---> Mask Stage 24
+ ---> Mask Stage 25
+ ---> Mask Stage 26
+ ---> Mask Stage 27
+ ---> Mask Stage 28
+ ---> Mask Stage 29
+ ---> Mask Stage 30
+ ---> Mask Stage 31
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          811 ms
+-> Processing:    19 ms
+-> Analysis:      136 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE Alfred to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : EnMask
+Warning: empty cb range [1:1], adjusting to [0.99:1.01]
+Plotting : OccupancyMap
+Warning: empty cb range [100:100], adjusting to [99:101]
+Plotting : L1Dist
+Saving : EnMask
+Saving : OccupancyMap
+Saving : L1Dist
+./data/000392_digitalscan/Alfred_EnMask.png
+./data/000392_digitalscan/Alfred_L1Dist.pdf
+./data/000392_digitalscan/Alfred_OccupancyMap.png
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: analogscan
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000393_analogscan/
+
+Timestamp: 2017-06-09_17:04:51
+Run Number: 393
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f48c2c22000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f48c2d3f000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "Alfred"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring Alfred
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: analogscan
+-> Found Analog Scan
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+ ---> Mask Stage 16
+ ---> Mask Stage 17
+ ---> Mask Stage 18
+ ---> Mask Stage 19
+ ---> Mask Stage 20
+ ---> Mask Stage 21
+ ---> Mask Stage 22
+ ---> Mask Stage 23
+ ---> Mask Stage 24
+ ---> Mask Stage 25
+ ---> Mask Stage 26
+ ---> Mask Stage 27
+ ---> Mask Stage 28
+ ---> Mask Stage 29
+ ---> Mask Stage 30
+ ---> Mask Stage 31
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          806 ms
+-> Processing:    23 ms
+-> Analysis:      136 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE Alfred to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : EnMask
+Plotting : OccupancyMap
+Plotting : L1Dist
+Saving : EnMask
+Saving : OccupancyMap
+Saving : L1Dist
+./data/000393_analogscan/Alfred_EnMask.png
+./data/000393_analogscan/Alfred_L1Dist.pdf
+./data/000393_analogscan/Alfred_OccupancyMap.png
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: tune_globalthreshold
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000394_tune_globalthreshold/
+
+Timestamp: 2017-06-09_17:04:52
+Run Number: 394
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7fc178966000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7fc178a83000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "Alfred"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring Alfred
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: tune_globalthreshold
+-> Found Global Threshold Tuning
+-> Running pre scan!
+void LoopActionBase::setVerbose(bool) : Enabling debug output
+void LoopActionBase::setup(LoopStatus*, Bookkeeper*)
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0050372
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 239
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0050372
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 223
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0050372
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 207
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.00506641
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 191
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.00536961
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 175
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.00813393
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 159
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0312628
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 143
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.157176
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 127
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.475332
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 111
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.855501
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 119
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.687268
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 123
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.582226
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 125
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.528014
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 126
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.501453
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 126
+ --> Final parameter of Fe 0 is 126
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          20770 ms
+-> Processing:    64 ms
+-> Analysis:      35 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE Alfred to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : OccupancyMap-0
+Plotting : OccupancyDist-0
+Plotting : L1Dist-0
+Plotting : OccupancyMap-1
+Plotting : OccupancyDist-1
+Plotting : L1Dist-1
+Plotting : OccupancyMap-2
+Plotting : OccupancyDist-2
+Plotting : L1Dist-2
+Plotting : OccupancyMap-3
+Plotting : OccupancyDist-3
+Plotting : L1Dist-3
+Plotting : OccupancyMap-4
+Plotting : OccupancyDist-4
+Plotting : L1Dist-4
+Plotting : OccupancyMap-5
+Plotting : OccupancyDist-5
+Plotting : L1Dist-5
+Plotting : OccupancyMap-6
+Plotting : OccupancyDist-6
+Plotting : L1Dist-6
+Plotting : OccupancyMap-7
+Plotting : OccupancyDist-7
+Plotting : L1Dist-7
+Plotting : OccupancyMap-8
+Plotting : OccupancyDist-8
+Plotting : L1Dist-8
+Plotting : OccupancyMap-9
+Plotting : OccupancyDist-9
+Plotting : L1Dist-9
+Plotting : OccupancyMap-10
+Plotting : OccupancyDist-10
+Plotting : L1Dist-10
+Plotting : OccupancyMap-11
+Plotting : OccupancyDist-11
+Plotting : L1Dist-11
+Plotting : OccupancyMap-12
+Plotting : OccupancyDist-12
+Plotting : L1Dist-12
+Plotting : OccupancyMap-13
+Plotting : OccupancyDist-13
+Plotting : L1Dist-13
+Saving : OccupancyMap-0
+Saving : OccupancyDist-0
+Saving : L1Dist-0
+Saving : OccupancyMap-1
+Saving : OccupancyDist-1
+Saving : L1Dist-1
+Saving : OccupancyMap-2
+Saving : OccupancyDist-2
+Saving : L1Dist-2
+Saving : OccupancyMap-3
+Saving : OccupancyDist-3
+Saving : L1Dist-3
+Saving : OccupancyMap-4
+Saving : OccupancyDist-4
+Saving : L1Dist-4
+Saving : OccupancyMap-5
+Saving : OccupancyDist-5
+Saving : L1Dist-5
+Saving : OccupancyMap-6
+Saving : OccupancyDist-6
+Saving : L1Dist-6
+Saving : OccupancyMap-7
+Saving : OccupancyDist-7
+Saving : L1Dist-7
+Saving : OccupancyMap-8
+Saving : OccupancyDist-8
+Saving : L1Dist-8
+Saving : OccupancyMap-9
+Saving : OccupancyDist-9
+Saving : L1Dist-9
+Saving : OccupancyMap-10
+Saving : OccupancyDist-10
+Saving : L1Dist-10
+Saving : OccupancyMap-11
+Saving : OccupancyDist-11
+Saving : L1Dist-11
+Saving : OccupancyMap-12
+Saving : OccupancyDist-12
+Saving : L1Dist-12
+Saving : OccupancyMap-13
+Saving : OccupancyDist-13
+Saving : L1Dist-13
+./data/000394_tune_globalthreshold/Alfred_L1Dist-0.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-10.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-11.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-12.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-13.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-1.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-2.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-3.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-4.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-5.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-6.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-7.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-8.pdf
+./data/000394_tune_globalthreshold/Alfred_L1Dist-9.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-0.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-10.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-11.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-12.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-13.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-1.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-2.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-3.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-4.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-5.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-6.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-7.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-8.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyDist-9.pdf
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-0.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-10.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-11.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-12.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-13.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-1.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-2.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-3.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-4.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-5.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-6.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-7.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-8.png
+./data/000394_tune_globalthreshold/Alfred_OccupancyMap-9.png
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: tune_globalpreamp
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000395_tune_globalpreamp/
+
+Timestamp: 2017-06-09_17:05:19
+Run Number: 395
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f1db0992000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f1db0aaf000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "Alfred"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring Alfred
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: tune_globalpreamp
+-> Found Global Preamp Tuning
+-> Running pre scan!
+void LoopActionBase::setVerbose(bool) : Enabling debug output
+void LoopActionBase::setup(LoopStatus*, Bookkeeper*)
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 6.02291 +- 0.756326
+Mean is: 5.92331
+ --> Received Feedback on Channel 0 with value: 64
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 8.31753 +- 1.1802
+Mean is: 8.21595
+ --> Received Feedback on Channel 0 with value: 32
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 10.5095 +- 1.53824
+Mean is: 10.4066
+ --> Received Feedback on Channel 0 with value: 48
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 9.27126 +- 1.36114
+Mean is: 9.16937
+ --> Received Feedback on Channel 0 with value: 40
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 9.85974 +- 1.45417
+Mean is: 9.75737
+ --> Received Feedback on Channel 0 with value: 36
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 10.1761 +- 1.49826
+Mean is: 10.0733
+ --> Received Feedback on Channel 0 with value: 36
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 10.1764 +- 1.49826
+Mean is: 10.0737
+ --> Received Feedback on Channel 0 with value: 36
+ --> Final parameter of Fe 0 is 36
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          6367 ms
+-> Processing:    89 ms
+-> Analysis:      10 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE Alfred to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_0
+Plotting : SigmaTotDist
+Plotting : L1Dist-0
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_1
+Plotting : SigmaTotDist
+Plotting : L1Dist-1
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_2
+Plotting : SigmaTotDist
+Plotting : L1Dist-2
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_3
+Plotting : SigmaTotDist
+Plotting : L1Dist-3
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_4
+Plotting : SigmaTotDist
+Plotting : L1Dist-4
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_5
+Plotting : SigmaTotDist
+Plotting : L1Dist-5
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_6
+Plotting : SigmaTotDist
+Plotting : L1Dist-6
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_0
+Saving : SigmaTotDist
+Saving : L1Dist-0
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_1
+Saving : SigmaTotDist
+Saving : L1Dist-1
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_2
+Saving : SigmaTotDist
+Saving : L1Dist-2
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_3
+Saving : SigmaTotDist
+Saving : L1Dist-3
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_4
+Saving : SigmaTotDist
+Saving : L1Dist-4
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_5
+Saving : SigmaTotDist
+Saving : L1Dist-5
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_6
+Saving : SigmaTotDist
+Saving : L1Dist-6
+./data/000395_tune_globalpreamp/Alfred_L1Dist-0.pdf
+./data/000395_tune_globalpreamp/Alfred_L1Dist-1.pdf
+./data/000395_tune_globalpreamp/Alfred_L1Dist-2.pdf
+./data/000395_tune_globalpreamp/Alfred_L1Dist-3.pdf
+./data/000395_tune_globalpreamp/Alfred_L1Dist-4.pdf
+./data/000395_tune_globalpreamp/Alfred_L1Dist-5.pdf
+./data/000395_tune_globalpreamp/Alfred_L1Dist-6.pdf
+./data/000395_tune_globalpreamp/Alfred_MeanTotDist_0.pdf
+./data/000395_tune_globalpreamp/Alfred_MeanTotDist_1.pdf
+./data/000395_tune_globalpreamp/Alfred_MeanTotDist_2.pdf
+./data/000395_tune_globalpreamp/Alfred_MeanTotDist_3.pdf
+./data/000395_tune_globalpreamp/Alfred_MeanTotDist_4.pdf
+./data/000395_tune_globalpreamp/Alfred_MeanTotDist_5.pdf
+./data/000395_tune_globalpreamp/Alfred_MeanTotDist_6.pdf
+./data/000395_tune_globalpreamp/Alfred_MeanTotMap.png
+./data/000395_tune_globalpreamp/Alfred_SigmaTotDist.pdf
+./data/000395_tune_globalpreamp/Alfred_SigmaTotMap.png
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: tune_globalthreshold
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000396_tune_globalthreshold/
+
+Timestamp: 2017-06-09_17:05:31
+Run Number: 396
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f0af45b8000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f0af46d5000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "Alfred"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring Alfred
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: tune_globalthreshold
+-> Found Global Threshold Tuning
+-> Running pre scan!
+void LoopActionBase::setVerbose(bool) : Enabling debug output
+void LoopActionBase::setup(LoopStatus*, Bookkeeper*)
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0050372
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 239
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0050372
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 223
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0050385
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 207
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.00508426
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 191
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.00549554
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 175
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.00939862
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 159
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.0402467
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 143
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.188453
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 127
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.525274
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 135
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.338018
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 131
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.431796
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 129
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.484905
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 128
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0]Mean Occupancy: 0.512289
+Calling feedback
+After feedback
+ --> Received Feedback on Channel 0 with value: 128
+ --> Final parameter of Fe 0 is 128
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          19144 ms
+-> Processing:    31 ms
+-> Analysis:      68 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE Alfred to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : OccupancyMap-0
+Plotting : OccupancyDist-0
+Plotting : L1Dist-0
+Plotting : OccupancyMap-1
+Plotting : OccupancyDist-1
+Plotting : L1Dist-1
+Plotting : OccupancyMap-2
+Plotting : OccupancyDist-2
+Plotting : L1Dist-2
+Plotting : OccupancyMap-3
+Plotting : OccupancyDist-3
+Plotting : L1Dist-3
+Plotting : OccupancyMap-4
+Plotting : OccupancyDist-4
+Plotting : L1Dist-4
+Plotting : OccupancyMap-5
+Plotting : OccupancyDist-5
+Plotting : L1Dist-5
+Plotting : OccupancyMap-6
+Plotting : OccupancyDist-6
+Plotting : L1Dist-6
+Plotting : OccupancyMap-7
+Plotting : OccupancyDist-7
+Plotting : L1Dist-7
+Plotting : OccupancyMap-8
+Plotting : OccupancyDist-8
+Plotting : L1Dist-8
+Plotting : OccupancyMap-9
+Plotting : OccupancyDist-9
+Plotting : L1Dist-9
+Plotting : OccupancyMap-10
+Plotting : OccupancyDist-10
+Plotting : L1Dist-10
+Plotting : OccupancyMap-11
+Plotting : OccupancyDist-11
+Plotting : L1Dist-11
+Plotting : OccupancyMap-12
+Plotting : OccupancyDist-12
+Plotting : L1Dist-12
+Saving : OccupancyMap-0
+Saving : OccupancyDist-0
+Saving : L1Dist-0
+Saving : OccupancyMap-1
+Saving : OccupancyDist-1
+Saving : L1Dist-1
+Saving : OccupancyMap-2
+Saving : OccupancyDist-2
+Saving : L1Dist-2
+Saving : OccupancyMap-3
+Saving : OccupancyDist-3
+Saving : L1Dist-3
+Saving : OccupancyMap-4
+Saving : OccupancyDist-4
+Saving : L1Dist-4
+Saving : OccupancyMap-5
+Saving : OccupancyDist-5
+Saving : L1Dist-5
+Saving : OccupancyMap-6
+Saving : OccupancyDist-6
+Saving : L1Dist-6
+Saving : OccupancyMap-7
+Saving : OccupancyDist-7
+Saving : L1Dist-7
+Saving : OccupancyMap-8
+Saving : OccupancyDist-8
+Saving : L1Dist-8
+Saving : OccupancyMap-9
+Saving : OccupancyDist-9
+Saving : L1Dist-9
+Saving : OccupancyMap-10
+Saving : OccupancyDist-10
+Saving : L1Dist-10
+Saving : OccupancyMap-11
+Saving : OccupancyDist-11
+Saving : L1Dist-11
+Saving : OccupancyMap-12
+Saving : OccupancyDist-12
+Saving : L1Dist-12
+./data/000396_tune_globalthreshold/Alfred_L1Dist-0.pdf
+./data/000396_tune_globalthreshold/Alfred_L1Dist-10.pdf
+./data/000396_tune_globalthreshold/Alfred_L1Dist-11.pdf
+./data/000396_tune_globalthreshold/Alfred_L1Dist-12.pdf
+./data/000396_tune_globalthreshold/Alfred_L1Dist-1.pdf
+./data/000396_tune_globalthreshold/Alfred_L1Dist-2.pdf
+./data/000396_tune_globalthreshold/Alfred_L1Dist-3.pdf
+./data/000396_tune_globalthreshold/Alfred_L1Dist-4.pdf
+./data/000396_tune_globalthreshold/Alfred_L1Dist-5.pdf
+./data/000396_tune_globalthreshold/Alfred_L1Dist-6.pdf
+./data/000396_tune_globalthreshold/Alfred_L1Dist-7.pdf
+./data/000396_tune_globalthreshold/Alfred_L1Dist-8.pdf
+./data/000396_tune_globalthreshold/Alfred_L1Dist-9.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-0.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-10.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-11.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-12.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-1.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-2.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-3.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-4.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-5.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-6.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-7.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-8.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyDist-9.pdf
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-0.png
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-10.png
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-11.png
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-12.png
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-1.png
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-2.png
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-3.png
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-4.png
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-5.png
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-6.png
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-7.png
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-8.png
+./data/000396_tune_globalthreshold/Alfred_OccupancyMap-9.png
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: tune_pixelthreshold
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000397_tune_pixelthreshold/
+
+Timestamp: 2017-06-09_17:05:56
+Run Number: 397
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7fa8066e5000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7fa806802000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "Alfred"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring Alfred
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: tune_pixelthreshold
+-> Found Pixel Threshold Tuning
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.510593
+[0] RMS: 83.7349
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.487209
+[0] RMS: 92.7746
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.500192
+[0] RMS: 77.8206
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.491201
+[0] RMS: 51.083
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.490792
+[0] RMS: 25.5306
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          7537 ms
+-> Processing:    92 ms
+-> Analysis:      2 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE Alfred to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : OccupancyMap-0
+Plotting : OccupancyDist-0
+Plotting : L1Dist-0
+Plotting : OccupancyMap-1
+Plotting : OccupancyDist-1
+Plotting : L1Dist-1
+Plotting : OccupancyMap-2
+Plotting : OccupancyDist-2
+Plotting : L1Dist-2
+Plotting : OccupancyMap-3
+Plotting : OccupancyDist-3
+Plotting : L1Dist-3
+Plotting : OccupancyMap-4
+Plotting : OccupancyDist-4
+Plotting : L1Dist-4
+Saving : OccupancyMap-0
+Saving : OccupancyDist-0
+Saving : L1Dist-0
+Saving : OccupancyMap-1
+Saving : OccupancyDist-1
+Saving : L1Dist-1
+Saving : OccupancyMap-2
+Saving : OccupancyDist-2
+Saving : L1Dist-2
+Saving : OccupancyMap-3
+Saving : OccupancyDist-3
+Saving : L1Dist-3
+Saving : OccupancyMap-4
+Saving : OccupancyDist-4
+Saving : L1Dist-4
+./data/000397_tune_pixelthreshold/Alfred_L1Dist-0.pdf
+./data/000397_tune_pixelthreshold/Alfred_L1Dist-1.pdf
+./data/000397_tune_pixelthreshold/Alfred_L1Dist-2.pdf
+./data/000397_tune_pixelthreshold/Alfred_L1Dist-3.pdf
+./data/000397_tune_pixelthreshold/Alfred_L1Dist-4.pdf
+./data/000397_tune_pixelthreshold/Alfred_OccupancyDist-0.pdf
+./data/000397_tune_pixelthreshold/Alfred_OccupancyDist-1.pdf
+./data/000397_tune_pixelthreshold/Alfred_OccupancyDist-2.pdf
+./data/000397_tune_pixelthreshold/Alfred_OccupancyDist-3.pdf
+./data/000397_tune_pixelthreshold/Alfred_OccupancyDist-4.pdf
+./data/000397_tune_pixelthreshold/Alfred_OccupancyMap-0.png
+./data/000397_tune_pixelthreshold/Alfred_OccupancyMap-1.png
+./data/000397_tune_pixelthreshold/Alfred_OccupancyMap-2.png
+./data/000397_tune_pixelthreshold/Alfred_OccupancyMap-3.png
+./data/000397_tune_pixelthreshold/Alfred_OccupancyMap-4.png
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: tune_globalpreamp
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000398_tune_globalpreamp/
+
+Timestamp: 2017-06-09_17:06:06
+Run Number: 398
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f1768508000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f1768625000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "Alfred"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring Alfred
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: tune_globalpreamp
+-> Found Global Preamp Tuning
+-> Running pre scan!
+void LoopActionBase::setVerbose(bool) : Enabling debug output
+void LoopActionBase::setup(LoopStatus*, Bookkeeper*)
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 5.99289 +- 0.653465
+Mean is: 5.89318
+ --> Received Feedback on Channel 0 with value: 64
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 8.26632 +- 1.02596
+Mean is: 8.16491
+ --> Received Feedback on Channel 0 with value: 32
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 10.4577 +- 1.38078
+Mean is: 10.3548
+ --> Received Feedback on Channel 0 with value: 48
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 9.21596 +- 1.19301
+Mean is: 9.11366
+ --> Received Feedback on Channel 0 with value: 40
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 9.79788 +- 1.28964
+Mean is: 9.69546
+ --> Received Feedback on Channel 0 with value: 36
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 10.1198 +- 1.33838
+Mean is: 10.0172
+ --> Received Feedback on Channel 0 with value: 36
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 8.17818 +- 4.09756
+Mean is: 8.07598
+ --> Received Feedback on Channel 0 with value: 35
+ --> Final parameter of Fe 0 is 35
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          6086 ms
+-> Processing:    72 ms
+-> Analysis:      27 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE Alfred to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_0
+Plotting : SigmaTotDist
+Plotting : L1Dist-0
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_1
+Plotting : SigmaTotDist
+Plotting : L1Dist-1
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_2
+Plotting : SigmaTotDist
+Plotting : L1Dist-2
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_3
+Plotting : SigmaTotDist
+Plotting : L1Dist-3
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_4
+Plotting : SigmaTotDist
+Plotting : L1Dist-4
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_5
+Plotting : SigmaTotDist
+Plotting : L1Dist-5
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_6
+Plotting : SigmaTotDist
+Plotting : L1Dist-6
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_0
+Saving : SigmaTotDist
+Saving : L1Dist-0
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_1
+Saving : SigmaTotDist
+Saving : L1Dist-1
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_2
+Saving : SigmaTotDist
+Saving : L1Dist-2
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_3
+Saving : SigmaTotDist
+Saving : L1Dist-3
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_4
+Saving : SigmaTotDist
+Saving : L1Dist-4
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_5
+Saving : SigmaTotDist
+Saving : L1Dist-5
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_6
+Saving : SigmaTotDist
+Saving : L1Dist-6
+./data/000398_tune_globalpreamp/Alfred_L1Dist-0.pdf
+./data/000398_tune_globalpreamp/Alfred_L1Dist-1.pdf
+./data/000398_tune_globalpreamp/Alfred_L1Dist-2.pdf
+./data/000398_tune_globalpreamp/Alfred_L1Dist-3.pdf
+./data/000398_tune_globalpreamp/Alfred_L1Dist-4.pdf
+./data/000398_tune_globalpreamp/Alfred_L1Dist-5.pdf
+./data/000398_tune_globalpreamp/Alfred_L1Dist-6.pdf
+./data/000398_tune_globalpreamp/Alfred_MeanTotDist_0.pdf
+./data/000398_tune_globalpreamp/Alfred_MeanTotDist_1.pdf
+./data/000398_tune_globalpreamp/Alfred_MeanTotDist_2.pdf
+./data/000398_tune_globalpreamp/Alfred_MeanTotDist_3.pdf
+./data/000398_tune_globalpreamp/Alfred_MeanTotDist_4.pdf
+./data/000398_tune_globalpreamp/Alfred_MeanTotDist_5.pdf
+./data/000398_tune_globalpreamp/Alfred_MeanTotDist_6.pdf
+./data/000398_tune_globalpreamp/Alfred_MeanTotMap.png
+./data/000398_tune_globalpreamp/Alfred_SigmaTotDist.pdf
+./data/000398_tune_globalpreamp/Alfred_SigmaTotMap.png
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: tune_pixelpreamp
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000399_tune_pixelpreamp/
+
+Timestamp: 2017-06-09_17:06:17
+Run Number: 399
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f309eb44000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f309ec61000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "Alfred"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring Alfred
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: tune_pixelpreamp
+-> Found Pixel Preamp Tuning
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 10.2009 +- 1.35725
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 10.7722 +- 2.08053
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 10.1726 +- 0.72015
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] ToT Mean = 10.1083 +- 0.214544
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          3632 ms
+-> Processing:    58 ms
+-> Analysis:      30 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE Alfred to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_0
+Plotting : SigmaTotDist
+Plotting : L1Dist-0
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_1
+Plotting : SigmaTotDist
+Plotting : L1Dist-1
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_2
+Plotting : SigmaTotDist
+Plotting : L1Dist-2
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_3
+Plotting : SigmaTotDist
+Plotting : L1Dist-3
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_0
+Saving : SigmaTotDist
+Saving : L1Dist-0
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_1
+Saving : SigmaTotDist
+Saving : L1Dist-1
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_2
+Saving : SigmaTotDist
+Saving : L1Dist-2
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_3
+Saving : SigmaTotDist
+Saving : L1Dist-3
+./data/000399_tune_pixelpreamp/Alfred_L1Dist-0.pdf
+./data/000399_tune_pixelpreamp/Alfred_L1Dist-1.pdf
+./data/000399_tune_pixelpreamp/Alfred_L1Dist-2.pdf
+./data/000399_tune_pixelpreamp/Alfred_L1Dist-3.pdf
+./data/000399_tune_pixelpreamp/Alfred_MeanTotDist_0.pdf
+./data/000399_tune_pixelpreamp/Alfred_MeanTotDist_1.pdf
+./data/000399_tune_pixelpreamp/Alfred_MeanTotDist_2.pdf
+./data/000399_tune_pixelpreamp/Alfred_MeanTotDist_3.pdf
+./data/000399_tune_pixelpreamp/Alfred_MeanTotMap.png
+./data/000399_tune_pixelpreamp/Alfred_SigmaTotDist.pdf
+./data/000399_tune_pixelpreamp/Alfred_SigmaTotMap.png
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: tune_pixelthreshold
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000400_tune_pixelthreshold/
+
+Timestamp: 2017-06-09_17:06:23
+Run Number: 400
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f4806778000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f4806895000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "Alfred"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring Alfred
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: tune_pixelthreshold
+-> Found Pixel Threshold Tuning
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.544859
+[0] RMS: 80.7837
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.449824
+[0] RMS: 92.3149
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.480011
+[0] RMS: 78.5547
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.482255
+[0] RMS: 51.1705
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+[0] Mean Occupancy: 0.50073
+[0] RMS: 24.1422
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          7611 ms
+-> Processing:    22 ms
+-> Analysis:      72 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE Alfred to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : OccupancyMap-0
+Plotting : OccupancyDist-0
+Plotting : L1Dist-0
+Plotting : OccupancyMap-1
+Plotting : OccupancyDist-1
+Plotting : L1Dist-1
+Plotting : OccupancyMap-2
+Plotting : OccupancyDist-2
+Plotting : L1Dist-2
+Plotting : OccupancyMap-3
+Plotting : OccupancyDist-3
+Plotting : L1Dist-3
+Plotting : OccupancyMap-4
+Plotting : OccupancyDist-4
+Plotting : L1Dist-4
+Saving : OccupancyMap-0
+Saving : OccupancyDist-0
+Saving : L1Dist-0
+Saving : OccupancyMap-1
+Saving : OccupancyDist-1
+Saving : L1Dist-1
+Saving : OccupancyMap-2
+Saving : OccupancyDist-2
+Saving : L1Dist-2
+Saving : OccupancyMap-3
+Saving : OccupancyDist-3
+Saving : L1Dist-3
+Saving : OccupancyMap-4
+Saving : OccupancyDist-4
+Saving : L1Dist-4
+./data/000400_tune_pixelthreshold/Alfred_L1Dist-0.pdf
+./data/000400_tune_pixelthreshold/Alfred_L1Dist-1.pdf
+./data/000400_tune_pixelthreshold/Alfred_L1Dist-2.pdf
+./data/000400_tune_pixelthreshold/Alfred_L1Dist-3.pdf
+./data/000400_tune_pixelthreshold/Alfred_L1Dist-4.pdf
+./data/000400_tune_pixelthreshold/Alfred_OccupancyDist-0.pdf
+./data/000400_tune_pixelthreshold/Alfred_OccupancyDist-1.pdf
+./data/000400_tune_pixelthreshold/Alfred_OccupancyDist-2.pdf
+./data/000400_tune_pixelthreshold/Alfred_OccupancyDist-3.pdf
+./data/000400_tune_pixelthreshold/Alfred_OccupancyDist-4.pdf
+./data/000400_tune_pixelthreshold/Alfred_OccupancyMap-0.png
+./data/000400_tune_pixelthreshold/Alfred_OccupancyMap-1.png
+./data/000400_tune_pixelthreshold/Alfred_OccupancyMap-2.png
+./data/000400_tune_pixelthreshold/Alfred_OccupancyMap-3.png
+./data/000400_tune_pixelthreshold/Alfred_OccupancyMap-4.png
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: noisescan
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000401_noisescan/
+
+Timestamp: 2017-06-09_17:06:33
+Run Number: 401
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f21b2b6a000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f21b2c87000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "Alfred"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring Alfred
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: noisescan
+-> Found Noisescan
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+### IMPORTANT ### Going into endless loop, interrupt with ^c (SIGINT)!
+^CCaught interrupt, stopping data taking!
+Abort will leave buffers full of data!
+Caught interrupt, stopping data taking!
+Abort will leave buffers full of data!
+Caught interrupt, stopping data taking!
+Abort will leave buffers full of data!
+Caught interrupt, stopping data taking!
+Abort will leave buffers full of data!
+Caught interrupt, stopping data taking!
+Abort will leave buffers full of data!
+Caught interrupt, stopping data taking!
+Abort will leave buffers full of data!
+Caught interrupt, stopping data taking!
+Abort will leave buffers full of data!
+Caught interrupt, stopping data taking!
+Abort will leave buffers full of data!
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          28313 ms
+-> Processing:    49 ms
+-> Analysis:      38 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE Alfred to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : L1Dist-0
+Warning: empty y range [0:0], adjusting to [0:1]
+Plotting : Occupancy
+Warning: empty cb range [0:0], adjusting to [-1:1]
+Plotting : NoiseOccupancy
+Warning: empty cb range [0:0], adjusting to [-1:1]
+Plotting : NoiseMask
+Warning: empty cb range [1:1], adjusting to [0.99:1.01]
+Saving : L1Dist-0
+Saving : Occupancy
+Saving : NoiseOccupancy
+Saving : NoiseMask
+./data/000401_noisescan/Alfred_L1Dist-0.pdf
+./data/000401_noisescan/Alfred_NoiseMask.png
+./data/000401_noisescan/Alfred_NoiseOccupancy.png
+./data/000401_noisescan/Alfred_Occupancy.png
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: totscan
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000402_totscan/
+
+Timestamp: 2017-06-09_17:07:03
+Run Number: 402
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7ff788807000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7ff788924000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "Alfred"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring Alfred
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: totscan
+-> Found ToT Scan
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+[0] ToT Mean = 10.069 +- 0.254573
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          735 ms
+-> Processing:    90 ms
+-> Analysis:      7 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE Alfred to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : MeanTotMap
+Plotting : SigmaTotMap
+Plotting : MeanTotDist_0
+Plotting : SigmaTotDist
+Plotting : L1Dist
+Saving : MeanTotMap
+Saving : SigmaTotMap
+Saving : MeanTotDist_0
+Saving : SigmaTotDist
+Saving : L1Dist
+./data/000402_totscan/Alfred_L1Dist.pdf
+./data/000402_totscan/Alfred_MeanTotDist_0.pdf
+./data/000402_totscan/Alfred_MeanTotMap.png
+./data/000402_totscan/Alfred_SigmaTotDist.pdf
+./data/000402_totscan/Alfred_SigmaTotMap.png
+#####################################
+# Welcome to the YARR Scan Console! #
+#####################################
+-> Parsing command line parameters ...
+ SPEC Nr: 0
+ Scan Type: thresholdscan
+ Chips: 
+    configs/alfred.json
+ Target Threshold: 2500
+ Target ToT: 10
+ Target Charge: 16000
+ Output Plots: 1
+ Output Directory: ./data/000403_thresholdscan/
+
+Timestamp: 2017-06-09_17:07:04
+Run Number: 403
+#################
+# Init Hardware #
+#################
+-> Opening controller config: configs/specCfg.json
+-> Found Spec config
+void SpecCom::init() -> Opening SPEC with id #0
+void SpecCom::init() -> Mapping BARs
+void SpecCom::init() -> Mapped BAR0 at 0x0x7f4b59801000 with size 0x100000
+void SpecCom::init() -> Mapped BAR4 at 0x0x7f4b5991e000 with size 0x1000
+void SpecCom::configure() -> Configuring GN412X
+#######################
+##  Loading Configs  ##
+#######################
+Found FE-I4B: "Alfred"
+void Bookkeeper::addFe(FrontEnd*, unsigned int, unsigned int) -> Added FE: Tx(0), Rx(0)
+
+#################
+# Configure FEs #
+#################
+-> Configuring Alfred
+-> All FEs configured in 34 ms !
+-> Setting Tx Mask to: 0x1
+-> Setting Rx Mask to: 0x1
+
+##############
+# Setup Scan #
+##############
+-> Selecting Scan: thresholdscan
+-> Found Threshold Scan
+-> Running pre scan!
+-> Starting 4 processor Threads:
+  -> Processor thread #0 started!
+  -> Processor thread #1 started!
+  -> Processor thread #2 started!
+  -> Processor thread #3 started!
+-> Starting histogrammer and analysis threads:
+  -> Analysis thread of Fe 0
+
+########
+# Scan #
+########
+-> Starting scan!
+ ---> Mask Stage 0
+ ---> Mask Stage 1
+ ---> Mask Stage 2
+ ---> Mask Stage 3
+ ---> Mask Stage 4
+ ---> Mask Stage 5
+ ---> Mask Stage 6
+ ---> Mask Stage 7
+ ---> Mask Stage 8
+ ---> Mask Stage 9
+ ---> Mask Stage 10
+ ---> Mask Stage 11
+ ---> Mask Stage 12
+ ---> Mask Stage 13
+ ---> Mask Stage 14
+ ---> Mask Stage 15
+-> Scan done!
+-> Waiting for processors to finish ...
+-> Processor done, waiting for analysis ...
+[0] Threashold Mean = 2519.92 +- 42.3408
+[0] Noise Mean = 113.084 +- 8.57145
+Saving S-curve #0
+Saving S-curve #2688
+Saving S-curve #5376
+Saving S-curve #8064
+Saving S-curve #10752
+Saving S-curve #13440
+Saving S-curve #16128
+Saving S-curve #18816
+Saving S-curve #21504
+Saving S-curve #24192
+-> All done!
+
+##########
+# Timing #
+##########
+-> Configuration: 34 ms
+-> Scan:          65804 ms
+-> Processing:    95 ms
+-> Analysis:      173 ms
+
+###########
+# Cleanup #
+###########
+-> Saving config of FE Alfred to configs/alfred.json
+-> Plotting histograms of FE 0
+Plotting : L1Dist
+Plotting : ThresholdDist
+Plotting : ThresholdMap
+Plotting : NoiseDist
+Plotting : NoiseMap
+Plotting : Chi2Dist
+Plotting : TimePerFitDist
+Plotting : Scurve-0
+Plotting : Scurve-2688
+Plotting : Scurve-5376
+Plotting : Scurve-8064
+Plotting : Scurve-10752
+Plotting : Scurve-13440
+Plotting : Scurve-16128
+Plotting : Scurve-18816
+Plotting : Scurve-21504
+Plotting : Scurve-24192
+Saving : L1Dist
+Saving : ThresholdDist
+Saving : ThresholdMap
+Saving : NoiseDist
+Saving : NoiseMap
+Saving : Chi2Dist
+Saving : TimePerFitDist
+Saving : Scurve-0
+Saving : Scurve-2688
+Saving : Scurve-5376
+Saving : Scurve-8064
+Saving : Scurve-10752
+Saving : Scurve-13440
+Saving : Scurve-16128
+Saving : Scurve-18816
+Saving : Scurve-21504
+Saving : Scurve-24192
+./data/000403_thresholdscan/Alfred_Chi2Dist.pdf
+./data/000403_thresholdscan/Alfred_L1Dist.pdf
+./data/000403_thresholdscan/Alfred_NoiseDist.pdf
+./data/000403_thresholdscan/Alfred_NoiseMap.png
+./data/000403_thresholdscan/Alfred_Scurve-0.pdf
+./data/000403_thresholdscan/Alfred_Scurve-10752.pdf
+./data/000403_thresholdscan/Alfred_Scurve-13440.pdf
+./data/000403_thresholdscan/Alfred_Scurve-16128.pdf
+./data/000403_thresholdscan/Alfred_Scurve-18816.pdf
+./data/000403_thresholdscan/Alfred_Scurve-21504.pdf
+./data/000403_thresholdscan/Alfred_Scurve-24192.pdf
+./data/000403_thresholdscan/Alfred_Scurve-2688.pdf
+./data/000403_thresholdscan/Alfred_Scurve-5376.pdf
+./data/000403_thresholdscan/Alfred_Scurve-8064.pdf
+./data/000403_thresholdscan/Alfred_ThresholdDist.pdf
+./data/000403_thresholdscan/Alfred_ThresholdMap.png
+./data/000403_thresholdscan/Alfred_TimePerFitDist.pdf
+[pixel@riverhorse2 src]$ display ./data/000403_thresholdscan/Alfred_ThresholdDist.pdf
+[pixel@riverhorse2 src]$ display ./data/000402_totscan/Alfred
+Alfred.json.after         Alfred_MeanTotDist_0.dat  Alfred_MeanTotMap.png     Alfred_SigmaTotMap.dat
+Alfred_L1Dist.dat         Alfred_MeanTotDist_0.pdf  Alfred_SigmaTotDist.dat   Alfred_SigmaTotMap.png
+Alfred_L1Dist.pdf         Alfred_MeanTotMap.dat     Alfred_SigmaTotDist.pdf   
+[pixel@riverhorse2 src]$ display ./data/000402_totscan/Alfred_MeanTotDist_0.pdf 
+[pixel@riverhorse2 src]$ 
+
