@@ -32,7 +32,7 @@
  
 #include <PID_v1.h>       // This includes the PID Library which is necessary to control the power driving the peltier based on how far away the current temperature is from the setpoint 
 
-int peltier = 4;          // declares the peltier pin address for the pwm mosfet control  
+int peltier = 3;          // declares the peltier pin address for the pwm mosfet control  
 double Output;            // declares the output parameter necessary for the PID function, in this case it's an integer from 0 to 255
 double Celsius;           // declares the input for the PID algorithm and what we are trying to control, in our case it is temperature in degrees celsius
 double Setpoint;          // declares the setpoint for the PID function, in our case this is the temperature of the cold side of the peltier
