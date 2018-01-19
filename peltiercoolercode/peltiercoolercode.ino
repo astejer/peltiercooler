@@ -1,3 +1,4 @@
+
 /*
  Lawrence Berkeley National Lab 2017
  Adrien Stejer
@@ -31,20 +32,21 @@
  */
 #include <PID_v1.h>       // This includes the PID Library which is necessary to control the power driving the peltier based on how far away the current temperature is from the setpoint 
 
-int peltier1 = 4, peltier2 = 13;     // declares the peltier pin addresses for the pwm mosfet control  
-double Output1, Output2;            // declares the output parameter necessary for the PID function, in this case it's an integer from 0 to 255
-double Celsius1, Celsius2;          // declares the input for the PID algorithm and what we are trying to control
-double Setpoint1, Setpoint2;        // declares the setpoint for each of the PID functions, 1 for the cold side and 2 for the shared side of the peltiers
+int peltier1=5, peltier2=6;
+double Output1;                     // declares the output parameter necessary for the PID function, in this case it's an integer from 0 to 255
+double Celsius1;                    // declares the input for the PID algorithm and what we are trying to control
+double Setpoint1;                   // declares the setpoint for each of the PID functions, 1 for the cold side and 2 for the shared side of the peltiers
 unsigned long time;
 
 //below are variables for NTC temp sensor
-int ThermistorPin[3] = {A0, A1, A2};                                     // declares the analog pin addresses for the thermistors 
-float V1;                                                                // declares the voltages that will be computed from the analog output in the voltage dividers
+int ThermistorPin[3] = {A0, A1, A2};       // declares the analog pin addresses for the thermistors 
+float V1;                                                        // declares the voltages that will be computed from the analog output in the voltage dividers
 float Vin = 5;                                                           // voltage applied to the voltage divider, used in analog conversion
 float R0 = 10000.;                                                       // the other resistor value in the voltage divider, also the R value of the NTC at 25C
 float logR1, R1;                       // declares variables for the current temperature calculation
 float T[3];
 float c1 = 298.15, b=3070.;                                              // c1 is 25C in Kelvin and b is the Beta value of the thermistor, we had to calibrate this as it was not the nominal value
+float dT,x;
 int counter=9;                                                           // counter used to slow down the serial window when it prints out the temperature
 
 /*
@@ -57,68 +59,67 @@ int counter=9;                                                           // coun
  * @param Direction -- (tentative REVERSE)
  */
  
-PID tempController1(&Celsius1, &Output1, &Setpoint1, 100, 3, .75, REVERSE);     // creates a PID controller linked to the peltier1 element, description of arguements/parameters given above
-PID tempController2(&Celsius2, &Output2, &Setpoint2, 100, 3, .75, REVERSE);     // same for peltier2 elemenet
+PID tempController(&Celsius1, &Output1, &Setpoint1, 400, 32, 1250, REVERSE);     // creates a PID controller linked to the peltier1 element, description of arguements/parameters given above
 
 
 void setup() {
-  
   Serial.begin(9600);                       // sets the baud for serial data transmission, make sure this matches with baud in serial monitor/plotter or you won't see the data printing out
-  pinMode(peltier1, OUTPUT);                // configures pin going to MOSFET driving peltier 1 as an output of pwm
-  pinMode(peltier2, OUTPUT);                // same as above for peltier two
-  Celsius1 = T[0], Celsius2 = T[1];         // sets the first and second thermistor temps as the inputs for the PID controllers
-  Setpoint1 = 20;                          // desired temperature(in C) for cold side of peltier1, ideally, -30 or -40
-  Setpoint2 = (Setpoint1+25.)/2.;                           // desired temperature(in C) for cold side of peltier2, should be lower than setpoint for peltier1, maybe 10
-  tempController1.SetSampleTime(1000);       // changed from 1000 to 200, let's see how this goes
-  tempController1.SetOutputLimits(0, 255);  // ensures the output is from 0 to 255 otherwise pwm won't work
-  tempController1.SetMode(AUTOMATIC);       // specifies that the PID should be ON
+  Celsius1 = T[0];                            // sets the first and second thermistor temps as the inputs for the PID controllers
+  Setpoint1 = 15 ;                          // desired temperature(in C) for cold side of peltier1, ideally, -30 or -40
+  tempController.SetSampleTime(1000);       // changed from 1000 to 200, let's see how this goes
+  tempController.SetOutputLimits(0, 255);  // ensures the output is from 0 to 255 otherwise pwm won't work
+  tempController.SetMode(AUTOMATIC);       // specifies that the PID should be ON
+
+  /*the following section can be edited to change the PWM frequency */
+  /*
+  TCCR3A = 0x23 ;
+  TCCR3B = 0x09 ; // mode 7, clock prescale by 1
+  OCR3A = 160-1 ;  // 160 clock periods = 10us per cycle
+  OCR3B =0 ;
+  TCNT3 =0 ;
+
+  TCCR4A = 0x23 ;
+  TCCR4B = 0x09 ; // mode 7, clock prescale by 1
+  OCR4A = 160-1 ;  // 160 clock periods = 10us per cycle
+  OCR4B =0 ;
+  TCNT4 =0 ;
+  */
+
   
-  tempController2.SetSampleTime(1000);       // same as above
-  tempController2.SetOutputLimits(0, 255);
-  tempController2.SetMode(AUTOMATIC);
 }
 
 void loop() {
   time = millis();
   counter +=1;                  // adds one to counter used to slow down the serial window when it prints out the temperature
 
-  /*Begin temperature monitoring */
-  
-  /*NTC Temp sensor */
+/*Begin temperature monitoring */
+  /*NTC Temp sensors */
   for(int i=0; i<3; i++){
     V1=(5/1023.0)*analogRead(ThermistorPin[i]);         // converts analog readout to voltage
-    R1 = R0 * (Vin/V1 - 1.0);                         // voltage divider equation to find current resistance of thermistor
+    R1 = R0 * (Vin/V1 - 1.0);                           // voltage divider equation to find current resistance of thermistor
     logR1 = log(R1/R0);                               
     T[i] = (1.0 / (1/c1 + ((1/b)*logR1)))-273.15;       // beta equation gives the current temperature, could also use steinhart-hart eqn for more accuracy
   }
+  
 
   if (counter == 10){           // ensures that the serial window prints every second rather than constantly
     for(int i=0; i<3; i++){
       Serial.print(T[i]);
       Serial.print("     ");
     }
-    Serial.print(Output1);
+    Serial.print((int)Output1);
     Serial.print("     ");
     Serial.print(time);
     Serial.println();
     counter=0;                  // sets counter back to 0 so it can print again after another second
   }
+  
+ Celsius1 = T[0];
 
-  Celsius1 = T[0];
-  Celsius2 = T[1];
+ boolean s1 = tempController.Compute();           // recomputes(at frequency specified by SetSampleTime) the output value going to the MOSFET through the pwm, it technically gives a boolean value (did it recompute output or not) but after it recomputes, the PID output changes
+ analogWrite(peltier1, Output1);                   // the new output has been calculated and this send the new value to the analog port
+ analogWrite(peltier2, Output1);                   // the new output has been calculated and this send the new value to the analog port
   
-  if(T[2]>60.){
-    analogWrite(peltier1,0);
-    analogWrite(peltier2,0);
-  }
-  else{
-    boolean s1 = tempController1.Compute();           // recomputes(at frequency specified by SetSampleTime) the output value going to the MOSFET through the pwm, it technically gives a boolean value (did it recompute output or not) but after it recomputes, the PID output changes
-    analogWrite(peltier1, 200);                   // the new output has been calculated and this send the new value to the analog port
- 
-    boolean s2 = tempController2.Compute();           // same as above
-    analogWrite(peltier2, 200); 
-  }
-  
-  delay(100);
+ delay(100);
   
 }
